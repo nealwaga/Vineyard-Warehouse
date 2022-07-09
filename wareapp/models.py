@@ -14,6 +14,33 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def create_product(self):
+        """
+        A method that creates a product
+        """
+        self.save()
+
+    def delete_product(self):
+        """
+        A method that deletes a product
+        """
+        self.delete()    
+
+    @classmethod
+    def update_product(cls, id):
+        """
+        A method that updates a product
+        """
+        product = cls.objects.filter(id=id).update(id=id)
+        return product       
+
+    @classmethod
+    def find_product(cls, product_id):
+        """
+        A method that finds a product using its id
+        """
+        return cls.objects.filter(id=product_id) 
+
 
 class Price(models.Model):
     product_id = models.ForeignKey('Product', on_delete=models.CASCADE,null=True)
@@ -66,6 +93,14 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.first_name
 
+    @classmethod
+    def update_customer(cls, id):
+        """
+        A method that updates a customer
+        """
+        customer = cls.objects.filter(id=id).update(id=id)
+        return customer    
+
 
 class Inventory(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -78,3 +113,15 @@ class Inventory(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+    def create_inventory(self):
+        """
+        A method that creates an inventory
+        """
+        self.save()
+
+    def delete_inventory(self):
+        """
+        A method that deletes an inventory
+        """
+        self.delete()    
