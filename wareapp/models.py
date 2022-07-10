@@ -34,12 +34,20 @@ class Product(models.Model):
         product = cls.objects.filter(id=id).update(id=id)
         return product       
 
+    # @classmethod
+    # def find_product(cls, product_id):
+    #     """
+    #     A method that finds a product using its id
+    #     """
+    #     return cls.objects.filter(id=product_id) 
+
     @classmethod
     def find_product(cls, product_id):
         """
         A method that finds a product using its id
-        """
-        return cls.objects.filter(id=product_id) 
+        """         
+        product = Product.objects.filter(id=product_id)
+        return product
 
 
 class Price(models.Model):
@@ -82,16 +90,19 @@ class Customer(models.Model):
     address = models.CharField(max_length=40)
     mobile = models.CharField(max_length=20,null=False)
     
-    @property
-    def get_name(self):
-        return self.user.first_name+" "+self.user.last_name
+    # @property
+    # def get_name(self):
+    #     return self.user.first_name+" "+self.user.last_name
     
+    # def __str__(self):
+    #     return self.user  
+
     @property
     def get_id(self):
         return self.user.id
     
-    def __str__(self):
-        return self.user.first_name
+    # def __str__(self):
+    #     return self.user.first_name
 
     @classmethod
     def update_customer(cls, id):
@@ -125,3 +136,11 @@ class Inventory(models.Model):
         A method that deletes an inventory
         """
         self.delete()    
+
+    @classmethod
+    def update_inventory(cls, id):
+        """
+        A method that updates an inventory
+        """
+        inventory = cls.objects.filter(id=id).update(id=id)
+        return inventory      
