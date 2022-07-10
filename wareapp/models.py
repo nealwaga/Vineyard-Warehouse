@@ -94,6 +94,7 @@ class Customer(models.Model):
     # def get_name(self):
     #     return self.user.first_name+" "+self.user.last_name
     
+    # @property
     # def __str__(self):
     #     return self.user  
 

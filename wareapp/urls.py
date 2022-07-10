@@ -26,15 +26,15 @@ urlpatterns = [
     path ('price', views.PriceList.as_view(), name='price'),
     path ('order-item', views.OrderItemList.as_view(), name='order-item'),
 
-    path ('add-product', views.AddProductList.as_view(), name='add-product'),
-    path ('delete-product', views.DeleteProductList.as_view(), name='delete-product'),
-    path ('update-product', views.UpdateProductList.as_view(), name='update-product'),
+    # path ('add-product', views.AddProductList.as_view(), name='add-product'),
+    # path ('delete-product', views.DeleteProductList.as_view(), name='delete-product'),
+    # path ('update-product', views.UpdateProductList.as_view(), name='update-product'),
 
-    path ('update-profile', views.UpdateProfileList.as_view(), name='update-profile'),
+    # path ('update-profile', views.UpdateProfileList.as_view(), name='update-profile'),
 
-    path ('add-inventory', views.AddInventoryList.as_view(), name='add-inventory'),
+    # path ('add-inventory', views.AddInventoryList.as_view(), name='add-inventory'),
 
 
-    path ('add-to-cart', views.AddToCartList.as_view(), name='add-to-cart'),
+    # path ('add-to-cart', views.AddToCartList.as_view(), name='add-to-cart'),
 
 ]

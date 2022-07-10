@@ -7,6 +7,7 @@ from .models import *
 
 
 #Create here
+
 # class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 #     @classmethod
 #     def get_token(cls, user):
@@ -85,46 +86,46 @@ class PriceSerializer(serializers.ModelSerializer):
         model = Price
         fields = ('product_id', 'boxes', 'amount')
     
-class AddProductSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
-    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+# class AddProductSerializer(serializers.ModelSerializer):
+#     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+#     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
-    class Meta:
-        model = Product
-        # fields = ('name', 'product_image','product_price', 'description')
-        fields ='__all__'
+#     class Meta:
+#         model = Product
+#         # fields = ('name', 'product_image','product_price', 'description')
+#         fields ='__all__'
         
-class DeleteProductSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+# class DeleteProductSerializer(serializers.ModelSerializer):
+#     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
-    class Meta:
-        model = Product
-        fields ='__all__'
+#     class Meta:
+#         model = Product
+#         fields ='__all__'
 
-class UpdateProductSerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+# class UpdateProductSerializer(serializers.ModelSerializer):
+#     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
-    class Meta:
-        model = Product
-        fields ='__all__'
-        # fields = ('name', 'product_image', 'product_price', 'description')
+#     class Meta:
+#         model = Product
+#         fields ='__all__'
+#         # fields = ('name', 'product_image', 'product_price', 'description')
 
-class UpdateProfileSerializer(serializers.ModelSerializer):
-    customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(),many=False)
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+# class UpdateProfileSerializer(serializers.ModelSerializer):
+#     customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(),many=False)
+#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
-    class Meta:
-        model = Customer
-        fields ='__all__'
-        # fields = ('name', 'product_image', 'product_price', 'description')
+#     class Meta:
+#         model = Customer
+#         fields ='__all__'
+#         # fields = ('name', 'product_image', 'product_price', 'description')
 
-class AddInventorySerializer(serializers.ModelSerializer):
-    inventory = serializers.PrimaryKeyRelatedField(queryset=Inventory.objects.all(),many=False)
-    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+# class AddInventorySerializer(serializers.ModelSerializer):
+#     inventory = serializers.PrimaryKeyRelatedField(queryset=Inventory.objects.all(),many=False)
+#     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
-    class Meta:
-        model = Inventory
-        # fields = ('name', 'product_image','product_price', 'description')
-        fields ='__all__'
+#     class Meta:
+#         model = Inventory
+#         # fields = ('name', 'product_image','product_price', 'description')
+#         fields ='__all__'

@@ -71,66 +71,66 @@ class PriceList(APIView):
         serializers = OrderItemSerializer(all_prices, many=True)
         return Response(serializers.data)
 
-class AddProductList(APIView):
-    # permission_classes = (IsAuthenticated, )
+# class AddProductList(APIView):
+#     # permission_classes = (IsAuthenticated, )
 
-    def post(self, request):
-        product = Product.objects.all()
-        serializer = AddProductSerializer(data=request.POST)
+#     def post(self, request):
+#         product = Product.objects.all()
+#         serializer = AddProductSerializer(data=request.POST)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-class DeleteProductList(APIView):
-    # permission_classes = (IsAuthenticated, )
+# class DeleteProductList(APIView):
+#     # permission_classes = (IsAuthenticated, )
 
-    def delete(self, request):
-        serializer = DeleteProductSerializer(data=request.DELETE)
+#     def delete(self, request):
+#         serializer = DeleteProductSerializer(data=request.DELETE)
 
-        if serializer.is_valid():
-            serializer.delete()
+#         if serializer.is_valid():
+#             serializer.delete()
 
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
-class UpdateProductList(APIView):
-    # permission_classes = (IsAuthenticated, )
+# class UpdateProductList(APIView):
+#     # permission_classes = (IsAuthenticated, )
 
-    def post(self, request):
-        serializer = UpdateProductSerializer(data=request.POST)
+#     def post(self, request):
+#         serializer = UpdateProductSerializer(data=request.POST)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
-class UpdateProfileList(APIView):
-    # permission_classes = (IsAuthenticated, )
+# class UpdateProfileList(APIView):
+#     # permission_classes = (IsAuthenticated, )
 
-    def post(self, request):
-        serializer = UpdateProfileSerializer(data=request.POST)
+#     def post(self, request):
+#         serializer = UpdateProfileSerializer(data=request.POST)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-        return Response(serializer.data)
+#         return Response(serializer.data)
 
-class AddInventoryList(APIView):
-    # permission_classes = (IsAuthenticated, )
+# class AddInventoryList(APIView):
+#     # permission_classes = (IsAuthenticated, )
 
-    def post(self, request):
-        # inventory = Inventory.objects.all()
-        serializer = AddInventorySerializer(data=request.POST)
+#     def post(self, request):
+#         # inventory = Inventory.objects.all()
+#         serializer = AddInventorySerializer(data=request.POST)
 
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-class AddToCartList(APIView):
-    # permission_classes = (IsAuthenticated, )
+# class AddToCartList(APIView):
+#     # permission_classes = (IsAuthenticated, )
 
-    def post(self, request, format=None):
-        all_product = Product.objects.all()
-        serializers = ProductSerializer(all_product, many=True)
+#     def post(self, request, format=None):
+#         all_product = Product.objects.all()
+#         serializers = ProductSerializer(all_product, many=True)
