@@ -8,14 +8,6 @@ from .models import *
 
 #Create here
 
-# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-#     @classmethod
-#     def get_token(cls, user):
-#         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-#         token['username'] = user.username
-#     return token
-
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,
@@ -45,8 +37,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
-            # address=validated_data['address'],
-            # contact=validated_data['contact']
         )
 
         user.set_password(validated_data['password'])
@@ -54,78 +44,119 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-class CustomerSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Customer
-        fields ='__all__'
-        # fields = ('user','profile_pic', 'address','mobile')
+        model=User
+        fields = '__all__'
+
+
+class CartSerializer(serializers.ModelSerializer):
+    product = serializers.StringRelatedField()
+    customer = serializers.StringRelatedField()
+
+    class Meta:
+        model = Cart
+        fields = '__all__'
+
+class PostCartSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+
+    class Meta:
+        model = Cart
+        fields = '__all__'
         
+
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        # fields = '__all__'
-        fields = ('name', 'product_image','product_price', 'description')
+        fields = '__all__'
+        # fields = ('name', 'product_image','product_price', 'description')
+
+class AddProductSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+
+    class Meta:
+        model = Product
+        # fields = ('name', 'product_image','product_price', 'description')
+        fields ='__all__'
         
+class UpdateProductSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+
+    class Meta:
+        model = Product
+        fields ='__all__'
+        # fields = ('name', 'product_image', 'product_price', 'description')
+
 class OrdersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Orders
-        fields = ('customer','product','email','address','mobile','order_date','status')
+        fields ='__all__'
+        # fields = ('user','product','email','address','mobile','order_date','status')
         
+
 class InventorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Inventory
         fields = ('name','cost_per_item', 'quantity_in_stock', 'quantity_sold', 'sales', 'stock_date','last_sales_date')
+
+class AddInventorySerializer(serializers.ModelSerializer):
+    inventory = serializers.PrimaryKeyRelatedField(queryset=Inventory.objects.all(),many=False)
+    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+
+    class Meta:
+        model = Inventory
+        # fields = ('name', 'product_image','product_price', 'description')
+        fields ='__all__'
         
+
 class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ('order_id', 'quantity')
-        
+
 class PriceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Price
         fields = ('product_id', 'boxes', 'amount')
-    
-# class AddProductSerializer(serializers.ModelSerializer):
-#     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
-#     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
-
-#     class Meta:
-#         model = Product
-#         # fields = ('name', 'product_image','product_price', 'description')
-#         fields ='__all__'
         
-# class DeleteProductSerializer(serializers.ModelSerializer):
-#     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
-#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+class DeleteProductSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
+    # user = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(),many=False)
 
-#     class Meta:
-#         model = Product
-#         fields ='__all__'
+    class Meta:
+        model = Product
+        fields ='__all__'
 
-# class UpdateProductSerializer(serializers.ModelSerializer):
-#     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(),many=False)
-#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
-#     class Meta:
-#         model = Product
-#         fields ='__all__'
-#         # fields = ('name', 'product_image', 'product_price', 'description')
 
-# class UpdateProfileSerializer(serializers.ModelSerializer):
-#     customer = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(),many=False)
-#     user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+class EditProfileSerializer(serializers.ModelSerializer):
+    customer = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
 
+    class Meta:
+        model = User
+        fields ='__all__'
+        fields = ('user','profile_pic', 'address','mobile')
+
+
+
+
+# class CustomerSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = Customer
 #         fields ='__all__'
-#         # fields = ('name', 'product_image', 'product_price', 'description')
+#         # fields = ('user','profile_pic', 'address','mobile')
 
-# class AddInventorySerializer(serializers.ModelSerializer):
-#     inventory = serializers.PrimaryKeyRelatedField(queryset=Inventory.objects.all(),many=False)
-#     # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(),many=False)
+# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+#     @classmethod
+#     def get_token(cls, user):
+#         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
-#     class Meta:
-#         model = Inventory
-#         # fields = ('name', 'product_image','product_price', 'description')
-#         fields ='__all__'
+#         token['username'] = user.username
+#     return token

@@ -1,7 +1,10 @@
+from contextlib import AbstractAsyncContextManager
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.core.validators import MaxValueValidator, MinValueValidator
+from contextlib import nullcontext
+from unicodedata import name
 
 # Create your models here.
 
@@ -34,13 +37,6 @@ class Product(models.Model):
         product = cls.objects.filter(id=id).update(id=id)
         return product       
 
-    # @classmethod
-    # def find_product(cls, product_id):
-    #     """
-    #     A method that finds a product using its id
-    #     """
-    #     return cls.objects.filter(id=product_id) 
-
     @classmethod
     def find_product(cls, product_id):
         """
@@ -64,13 +60,14 @@ class Price(models.Model):
 
 
 class Orders(models.Model):
-    STATUS =(
+    STATUS = (
         ('Pending','Pending'),
         ('Order Confirmed','Order Confirmed'),
         ('Out for Delivery','Out for Delivery'),
         ('Delivered','Delivered'),
     )
-    customer=models.ForeignKey('Customer', on_delete=models.CASCADE,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    # user = models.OneToOneField(User,on_delete=models.CASCADE)
     product=models.ForeignKey('Product',on_delete=models.CASCADE,null=True)
     email = models.CharField(max_length=50,null=True)
     address = models.CharField(max_length=500,null=True)
@@ -84,34 +81,23 @@ class OrderItem(models.Model):
     quantity = models.IntegerField(null=True)
 
 
-class Customer(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
-    profile_pic= CloudinaryField('image/', default="")
-    address = models.CharField(max_length=40)
-    mobile = models.CharField(max_length=20,null=False)
+# class Customer(models.Model):
+#     user=models.OneToOneField(User,on_delete=models.CASCADE)
+#     # first_name = models.CharField(max_length=255,null=True)
+#     profile_pic= CloudinaryField('image/', default="")
+#     address = models.CharField(max_length=40)
+#     mobile = models.CharField(max_length=20,null=False)
     
-    # @property
-    # def get_name(self):
-    #     return self.user.first_name+" "+self.user.last_name
-    
-    # @property
-    # def __str__(self):
-    #     return self.user  
+#     def __str__(self) -> str:
+#         return self.user.username
 
-    @property
-    def get_id(self):
-        return self.user.id
-    
-    # def __str__(self):
-    #     return self.user.first_name
-
-    @classmethod
-    def update_customer(cls, id):
-        """
-        A method that updates a customer
-        """
-        customer = cls.objects.filter(id=id).update(id=id)
-        return customer    
+#     @classmethod
+#     def update_customer(cls, id):
+#         """
+#         A method that updates a customer
+#         """
+#         customer = cls.objects.filter(id=id).update(id=id)
+#         return customer    
 
 
 class Inventory(models.Model):
@@ -145,3 +131,72 @@ class Inventory(models.Model):
         """
         inventory = cls.objects.filter(id=id).update(id=id)
         return inventory      
+
+
+class Cart(models.Model):
+    products = models.ForeignKey(Product, related_name='cart_products', on_delete=models.CASCADE)
+    # user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+
+    # @property
+    # def get_images(self):
+    #     return self.cart_products.all()
+
+
+class Profile(models.Model):
+    """
+    model for a user profile
+    """
+    user = models.OneToOneField(User, related_name="users", on_delete=models.CASCADE, default="")
+    # user = models.ForeignKey('Customer', on_delete=models.CASCADE,null=True)
+
+    def __str__(self) -> str:
+        return self.user.username
+
+    @property
+    def get_name(self):
+        return self.user.first_name+" "+self.user.last_name
+
+    @classmethod
+    def save_profile(cls, profile):
+        cls.save(profile)
+
+    @classmethod
+    def update_profile(cls, user):
+        cls.update(user=user)
+
+    @classmethod
+    def delete_profile(cls, profile):
+        cls.delete(profile)
+
+
+
+
+
+
+
+
+# class AbstractBaseModel(models.Model):
+#     created = models.DateTimeField(auto_now_add=True)
+#     updated = models.DateTimeField(auto_now=True)
+
+#     class Meta:
+#         abstract = True
+
+# class Products(AbstractBaseModel):
+#     name=models.CharField(max_length=40)
+#     product_image= CloudinaryField('image/', default="")
+#     description=models.CharField(max_length=40)
+#     product_price = models.PositiveIntegerField(null=False, blank=False, default=1)
+
+#     def __str__(self):
+#         return self.name
+
+# class Customer(AbstractBaseModel):
+#     name = models.CharField(max_length=200)
+#     phone_number = models.CharField(max_length=200)
+#     email = models.EmailField()
+
+#     def __str__(self):
+#         return self.name
